@@ -18,10 +18,12 @@ namespace CSJ.NET
 
     internal static class StringExtensions
     {
-        public static string StripArray(this string s)
-        {
-            return s.Substring(1, s.Length - 2);
-        }
+        private static readonly string[] LineEndings = { "\n", "\r\n" };
+
+        public static string Unwrap(this string s) => s.Substring(1, s.Length - 2);
+
+        public static string[] SplitLines(this string s) => s.Split(LineEndings, StringSplitOptions.RemoveEmptyEntries);
+
     }
 
     public class CsjSerializer
@@ -31,7 +33,7 @@ namespace CSJ.NET
             var buffer = new StringBuilder();
             foreach (var row in rows)
             {
-                buffer.AppendLine(Utils.JsonEncode(row).StripArray());
+                buffer.AppendLine(Utils.JsonEncode(row).Unwrap());
             }
 
             return buffer.ToString();
@@ -52,11 +54,11 @@ namespace CSJ.NET
         public string Serialize(IEnumerable<T> objects)
         {
             var buffer = new StringBuilder();
-            buffer.AppendLine(Utils.JsonEncode(_columns.Select(p => p.Name)).StripArray());
+            buffer.AppendLine(Utils.JsonEncode(_columns.Select(p => p.Name)).Unwrap());
 
             foreach (var row in objects)
             {
-                buffer.AppendLine(Utils.JsonEncode(_columns.Select(c => c.GetValue(row))).StripArray());
+                buffer.AppendLine(Utils.JsonEncode(_columns.Select(c => c.GetValue(row))).Unwrap());
             }
 
             return buffer.ToString();

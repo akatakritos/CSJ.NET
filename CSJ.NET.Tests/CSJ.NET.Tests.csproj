@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsjDeserializerTests.cs" />
     <Compile Include="CsjSerializerBasicFormattingTests.cs" />
     <Compile Include="CsjSerializerObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
