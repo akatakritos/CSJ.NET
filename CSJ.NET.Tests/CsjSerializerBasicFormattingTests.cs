@@ -82,7 +82,7 @@ namespace CSJ.NET.Tests
             Check.That(output).IsEqualTo("42,[\"foo\",\"bar\"]" + Environment.NewLine);
         }
 
-        private class NestedObject
+        private sealed class NestedObject
         {
             public string Foo { get; set; }
             public string Baz { get; set; }
