@@ -1,5 +1,5 @@
 # CSJ.NET - Comma Separated JSON for .NET
-[![Build status (develop)](https://ci.appveyor.com/api/projects/status/f3qha9spaw9yv2c7/branch/develop?svg=true)](https://ci.appveyor.com/project/akatakritos/csj-net/branch/master)
+[![Build status (develop)](https://ci.appveyor.com/api/projects/status/f3qha9spaw9yv2c7/branch/develop?svg=true)](https://ci.appveyor.com/project/akatakritos/csj-net/branch/develop)
 [![NuGet](https://img.shields.io/nuget/v/CSJ.NET.svg?maxAge=2592000)](https://www.nuget.org/packages/CSJ.NET/)
 
 Simple implementation of [Comma Separated JSON](http://www.kirit.com/Comma%20Separated%20JSON)
