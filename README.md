@@ -39,4 +39,4 @@ Some features that would be nice to add. I'll create issues for them, feel free 
  * [ ] Serialize without header
  * [ ] Specify order of columns
  * [ ] Support `[JsonProperty]` attribute
- * [ ] Streaming support
+ * [x] Streaming support
