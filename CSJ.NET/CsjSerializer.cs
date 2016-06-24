@@ -4,28 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-using Newtonsoft.Json;
-
 namespace CSJ.NET
 {
-    internal static class Utils
-    {
-        public static string JsonEncode<T>(T o)
-        {
-            return JsonConvert.SerializeObject(o);
-        }
-    }
-
-    internal static class StringExtensions
-    {
-        private static readonly string[] LineEndings = { "\n", "\r\n" };
-
-        public static string Unwrap(this string s) => s.Substring(1, s.Length - 2);
-
-        public static string[] SplitLines(this string s) => s.Split(LineEndings, StringSplitOptions.RemoveEmptyEntries);
-
-    }
-
     public class CsjSerializer
     {
         public string Serialize(IEnumerable<object[]> rows)
