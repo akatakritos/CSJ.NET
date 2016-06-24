@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using NFluent;
@@ -27,6 +28,34 @@ namespace CSJ.NET.Tests
 15,12.43,""bazbox"",""2015-02-03T10:37:15Z""";
 
             var results = subject.Deserialize(csj).ToArray();
+
+            Check.That(results).HasSize(2);
+            Check.That(results[0]).HasFieldsWithSameValues(new SimpleObject()
+            {
+                Integer = 2,
+                Double = 42.23,
+                String = "foobar",
+                Date = new DateTime(2015, 2, 3, 10, 37, 15, DateTimeKind.Utc),
+            });
+            Check.That(results[1]).HasFieldsWithSameValues(new SimpleObject()
+            {
+                Integer = 15,
+                Double = 12.43,
+                String = "bazbox",
+                Date = new DateTime(2015, 2, 3, 10, 37, 15, DateTimeKind.Utc),
+            });
+        }
+
+        [Fact]
+        public void DeserializesFromStream()
+        {
+            var subject = new CsjDeserializer<SimpleObject>();
+            const string csj = @"""Integer"",""Double"",""String"",""Date""
+2,42.23,""foobar"",""2015-02-03T10:37:15Z""
+15,12.43,""bazbox"",""2015-02-03T10:37:15Z""";
+            var stream = new StringReader(csj);
+
+            var results = subject.Deserialize(stream).ToArray();
 
             Check.That(results).HasSize(2);
             Check.That(results[0]).HasFieldsWithSameValues(new SimpleObject()

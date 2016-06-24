@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -19,13 +20,28 @@ namespace CSJ.NET
 
         public IEnumerable<T> Deserialize(string csj)
         {
-            var rows = csj.SplitLines();
-            var headers = rows[0].Split(',').Select(s => s.Unwrap()).ToArray();
-            foreach (var row in csj.SplitLines().Skip(1))
+            var reader = new StringReader(csj);
+            return Deserialize(reader);
+        }
+
+        public IEnumerable<T> Deserialize(TextReader reader)
+        {
+            var firstLine = reader.ReadLine();
+            if (firstLine == null)
+            {
+                return Enumerable.Empty<T>();
+            }
+
+            var headers = firstLine.Split(',').Select(s => s.Unwrap()).ToArray();
+            return DeserializeStream(reader, headers);
+        }
+
+        private IEnumerable<T> DeserializeStream(TextReader reader, IReadOnlyList<string> headers)
+        {
+            foreach(var line in ReadLines(reader))
             {
                 var output = new T();
-
-                var array = JArray.Parse('[' + row + ']');
+                var array = JArray.Parse('[' + line + ']');
                 for (int i = 0; i < array.Count; i++)
                 {
                     var prop = GetProperty(headers[i]);
@@ -34,7 +50,15 @@ namespace CSJ.NET
 
                 yield return output;
             }
+        }
 
+        private IEnumerable<string> ReadLines(TextReader reader)
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                yield return line;
+            }
         }
 
     }

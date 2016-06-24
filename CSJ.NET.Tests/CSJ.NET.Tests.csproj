@@ -64,6 +64,7 @@
     <Compile Include="CsjSerializerBasicFormattingTests.cs" />
     <Compile Include="CsjSerializerObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoundTrip.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
