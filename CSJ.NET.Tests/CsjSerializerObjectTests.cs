@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,6 +54,31 @@ namespace CSJ.NET.Tests
             var firstRow = result.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Last();
             Check.That(firstRow)
                 .IsEqualTo(@"""t1"",""Terminator"",127,""1984-10-26T00:00:00Z"",[""adventure"",""action""],null");
+        }
+
+        [Fact]
+        public void SerializesToStream()
+        {
+            var subject = new CsjSerializer<MovieExample>();
+            var stream = new StringWriter();
+
+            subject.Serialize(stream, new[]
+            {
+                new MovieExample
+                {
+                    Slug = "t1",
+                    Title = "Terminator",
+                    Length = 127,
+                    Released = new DateTime(1984, 10, 26, 0, 0, 0, DateTimeKind.Utc),
+                    Tags = new[] { "adventure", "action" },
+                    WatchedTimes = null
+                }
+            });
+
+            Check.That(stream.ToString()).IsEqualTo(
+                @"""Slug"",""Title"",""Length"",""Released"",""Tags"",""WatchedTimes""" + Environment.NewLine +
+                @"""t1"",""Terminator"",127,""1984-10-26T00:00:00Z"",[""adventure"",""action""],null" + Environment.NewLine
+            );
         }
     }
 }
